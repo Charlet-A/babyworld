@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaBeee - Products</title>
+    <!-- Updated to accurate Font Awesome v5 Kits CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400..900;1,400..900&family=Poppins:wght=300;400;500;600;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #fff8f9; /* Super clean, high-end soft background */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Ambient glowing ambient light orbs in the deep background */
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(243, 55, 149, 0.08) 0%, rgba(255,255,255,0) 70%);
+            top: -200px;
+            right: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(74, 20, 140, 0.06) 0%, rgba(255,255,255,0) 70%);
+            bottom: -100px;
+            left: -100px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            width: 100%;
+            padding: 25px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar-outer {
+            background: linear-gradient(90deg, #f33795, #4a148c);
+            padding: 6px;
+            border-radius: 100px;
+            max-width: 1300px;
+            margin: 0 auto;
+            box-shadow: 0 12px 35px rgba(233, 30, 99, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            background: #ffffff;
+            padding: 0 30px;
+            height: 58px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Brush Script MT', cursive;
+            font-style: italic;
+            font-size: 28px;
+            font-weight: 800;
+            color: #e91e63;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-links a, .dropbtn {
+            color: #4a148c;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 0 16px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* Responsive UI Icon Toggles */
+        .nav-links a i, .dropbtn i.fa-home, .dropbtn i.fa-shopping-bag, .dropbtn i.fa-newspaper, .dropbtn i.fa-info-circle, .dropbtn i.fa-envelope, .dropbtn i.fa-cog {
+            display: none;
+        }
+
+        .nav-links .dropbtn i.fa-chevron-down {
+            display: inline-block !important;
+        }
+
+        .login-btn-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-left: 10px;
+        }
+
+        .login-btn-container a {
+            background-color: #2e7d32;
+            color: white;
+            height: 38px;
+            border-radius: 50px;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .login-btn-container a i {
+            display: inline-block !important;
+            margin-right: 6px;
+        }
+
+        .nav-links a:hover, .dropdown:hover .dropbtn {
+            color: #e91e63;
+            background-color: #fff0f5;
+        }
+
+        .dropdown {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-radius: 14px;
+            padding: 8px 0;
+            border: 2px solid #4a148c;
+            z-index: 1100;
+            margin-top: 0px; 
+            transform: translateY(0);
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -15px; 
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: transparent;
+        }
+
+        .settings-width {
+            min-width: 145px;
+        }
+
+        .dropdown-menu a, .dropdown-item {
+            color: #4a148c;
+            width: 100%;
+            padding: 11px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a i, .dropdown-item i {
+            display: inline-block !important;
+            margin-right: 8px;
+        }
+
+        .dropdown-menu a:hover, .dropdown-item:hover {
+            background-color: #fff0f5;
+            color: #e91e63;
+        }
+
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .nested-dropdown {
+            position: relative;
+        }
+
+        .nested-menu {
+            display: none;
+            position: absolute;
+            top: -10px;
+            right: 100%;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-radius: 14px;
+            padding: 8px 0;
+            border: 2px solid #4a148c;
+            z-index: 1200;
+        }
+
+        .nested-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -15px; 
+            width: 15px;
+            height: 100%;
+            background: transparent;
+        }
+
+        .nested-dropdown:hover > .nested-menu {
+            display: block;
+        }
+
+        /* --- PREMIUM STUDIO SPLIT-SCREEN LAYOUT --- */
+        .studio-layout {
+            max-width: 1400px;
+            width: 100%;
+            margin: 150px auto 100px auto;
+            padding: 0 30px;
+            display: flex;
+            gap: 40px;
+            flex-grow: 1;
+        }
+
+        /* Left Side: Sticky Premium Control Dashboard */
+        .studio-sidebar {
+            width: 320px;
+            min-width: 320px;
+            position: sticky;
+            top: 150px;
+            height: fit-content;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(180, 11, 158, 0.7);
+            border-radius: 32px;
+            padding: 30px 24px;
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.03);
+        }
+
+        .sidebar-brand-title {
+            font-family: 'Playfair Display', serif;
+            color: #4a148c;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            border-bottom: 2px solid #fff0f5;
+            padding-bottom: 15px;
+        }
+
+        .concept-selector-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .concept-row-btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(74, 20, 140, 0.08);
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #4a148c;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .concept-row-btn .btn-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .concept-row-btn i.main-ico {
+            width: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #f33795;
+            transition: transform 0.3s ease;
+        }
+
+        .concept-row-btn i.arrow-ico {
+            font-size: 0.8rem;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* Hover animation aesthetics */
+        .concept-row-btn:hover {
+            background: #ffffff;
+            border-color: #f33795;
+            color: #e91e63;
+            transform: translateX(4px);
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.05);
+        }
+
+        /* Active concept state triggers */
+        .concept-row-btn.active-row {
+            background: linear-gradient(135deg, #4a148c, #7b1fa2);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 10px 25px rgba(74, 20, 140, 0.25);
+        }
+
+        .concept-row-btn.active-row i.main-ico { color: #ffd166; }
+        .concept-row-btn.active-row i.arrow-ico { opacity: 1; transform: translateX(0); color: #ffd166;}
+
+        /* Right Side: Showcase Content Grid Stream */
+        .studio-showcase-stream {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Interactive Action & Search Bar Header */
+        .stream-action-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .stream-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #4a148c;
+            font-weight: 700;
+        }
+
+        .search-glass-container {
+            position: relative;
+            width: 380px;
+        }
+
+        .search-glass-container input {
+            width: 100%;
+            padding: 14px 20px 14px 50px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(74, 20, 140, 0.12);
+            border-radius: 50px;
+            outline: none;
+            font-size: 0.95rem;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+            transition: all 0.3s ease;
+        }
+
+        .search-glass-container input:focus {
+            background: #ffffff;
+            border-color: #f33795;
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.08);
+        }
+
+        .search-glass-container i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b91372;
+            font-size: 1rem;
+        }
+
+        /* 3-Column Studio Showcase Architecture */
+        .studio-products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+        }
+
+        .studio-card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 16px;
+            border: 1px solid rgba(243, 55, 149, 0.06);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.4s cubic-bezier(0.215, 0.610, 0.355, 1), box-shadow 0.4s ease;
+        }
+
+        .studio-card.hidden-studio-item {
+            display: none !important;
+        }
+
+        .card-photo-panel {
+            width: 100%;
+            height: 240px;
+            border-radius: 20px;
+            border:5px solid rgb(65, 3, 65);
+            overflow: hidden;
+            position: relative;
+            background-color: #fcfcfc;
+        }
+
+        .card-photo-panel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* Clean Bottom-Slide Action Trigger */
+        .card-action-drawer {
+            position: absolute;
+            bottom: -55px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to top, rgba(74, 20, 140, 0.8), rgba(74,20,140,0.4));
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: bottom 0.35s ease;
+        }
+
+        .drawer-btn {
+            background: #ffffff;
+            color: #4a148c;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .studio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(74, 20, 140, 0.08);
+            border-color: rgba(243, 55, 149, 0.15);
+        }
+
+        .studio-card:hover .card-photo-panel img {
+            transform: scale(1.06);
+        }
+
+        .studio-card:hover .card-action-drawer {
+            bottom: 0;
+        }
+
+        .card-meta-data {
+            padding: 15px 6px 0 6px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .studio-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #f33795;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .studio-item-name {
+            font-size: 1.25rem;
+            color: #222222;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .studio-item-desc {
+            font-size: 0.85rem;
+            color: #777777;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            height: 38px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .studio-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #f10d59;
+            padding-top: 14px;
+            margin-top: auto;
+        }
+
+        .studio-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #4a148c;
+        }
+
+        .studio-buy-now {
+            background: linear-gradient(135deg, #f33795, #b91372);
+            color: #ffffff;
+            border: none;
+            padding: 9px 22px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(243, 55, 149, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .studio-buy-now:hover {
+            box-shadow: 0 6px 20px rgba(243, 55, 149, 0.35);
+            opacity: 0.95;
+        }
+
+        /* --- IMMERSIVE MINIMALIST RUNNER FOOTER TICKER --- */
+        .studio-ticker-belt {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #4a148c;
+            color: #ffffff;
+            padding: 8px 0;
+            z-index: 2000;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .ticker-inner-stream {
+            display: inline-block;
+            padding-left: 100%;
+            animation: elegantMarquee 32s linear infinite;
+        }
+
+        .ticker-phrase {
+            display: inline-block;
+            padding: 0 45px;
+        }
+
+        .ticker-phrase i {
+            margin-right: 8px;
+            color: #ffd166;
+        }
+
+        @keyframes elegantMarquee {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* --- RESPONSIVE BREAKPOINT OVERRIDES --- */
+        @media (max-width: 1200px) {
+            .studio-products-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 992px) {
+            .studio-layout { flex-direction: column; gap: 30px; }
+            .studio-sidebar { width: 100%; position: relative; top: 0; padding: 20px; border-radius: 24px; }
+            .sidebar-brand-title { display: none; }
+            .concept-selector-stack { flex-direction: row; flex-wrap: wrap; }
+            .concept-row-btn { width: calc(50% - 6px); padding: 12px 15px; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 12px 10px; background: #fff8f9; }
+            .navbar-outer { background: #ffffff; border-radius: 40px; box-shadow: 0 8px 25px rgba(233, 30, 99, 0.15); width: 100%; padding: 0; }
+            .navbar { height: 52px; padding: 0 10px; justify-content: center; }
+            .logo { display: none; }
+            .nav-links { width: 100%; justify-content: space-between; }
+            .nav-links a, .dropbtn { padding: 0 6px; font-size: 0; height: 52px; }
+            .nav-links a i, .dropbtn i { display: inline-block !important; font-size: 18px; margin: 0; }
+            .dropbtn i.fa-chevron-down { display: none !important; }
+            .login-btn-container a { width: 36px; height: 36px; padding: 0; border-radius: 50%; justify-content: center; background-color: #2e7d32; }
+            .login-btn-container a span { display: none; }
+            .dropdown-menu { left: 50%; right: auto; transform: translateX(-50%); min-width: 140px; border-radius: 12px; }
+
+            .studio-layout { margin-top: 120px; padding: 0 15px; }
+            .concept-row-btn { width: 100%; }
+            .stream-action-header { flex-direction: column; align-items: stretch; gap: 15px; }
+            .search-glass-container { width: 100%; }
+            .studio-products-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Visual Elements -->
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-2"></div>
+
+    <!-- Sticky Navigation Header Area -->
+    <header>
+        <div class="navbar-outer">
+            <nav class="navbar">
+                <!-- Fixed Logo Brand Icon (fab for brand glyphs) -->
+                <a href="#" class="logo">
+                    <i class="fab fa-gg" aria-hidden="true"></i> BaBeee
+                </a>
+                
+                <div class="nav-links">
+                    <a href="home.html"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+                    
+                   <div class="dropdown">
+                        <button class="dropbtn"><i class="fas fa-shopping-bag" aria-hidden="true"></i>Shop <i class="fas fa-chevron-down" style="font-size:10px;"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="nested-dropdown">
+                                <div class="dropdown-item">Nursery <i class="fas fa-chevron-left" style="font-size:10px;"></i></div>
+                                <div class="nested-menu">
+                                    <a href="Nursery.html">Toys</a>
+                                    <a href="Nursery.html">Cribs</a>
+                                    <a href="Nursery.html">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="nested-dropdown">
+                                <div class="dropdown-item">Fashion <i class="fas fa-chevron-left" style="font-size:10px;"></i></div>
+                                <div class="nested-menu">
+                                    <a href="Fashion.html">Sleep Wear</a>
+                                    <a href="Fashion.html">Outer Wear</a>
+                                    <a href="Fashion.html">Dresses</a>
+                                </div>
+                            </div>
+                            <div class="nested-dropdown">
+                                <div class="dropdown-item">Products <i class="fas fa-chevron-left" style="font-size:10px;"></i></div>
+                                <div class="nested-menu">
+                                    <a href="Product.html">Skin Care</a>
+                                    <a href="Product.html">Hair Care</a>
+                                    <a href="Product.html">Medicine Kit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#"><i class="fas fa-newspaper" aria-hidden="true"></i>Blogs</a>
+                    <a href="about.html"><i class="fa fa-info-circle" aria-hidden="true"></i>About</a>   
+                    <a href="contact.html"><i class="fa fa-envelope" aria-hidden="true"></i>Contact Us</a>
+
+                    <div class="dropdown">
+                        <button class="dropbtn"><i class="fa fa-cog" aria-hidden="true"></i>Settings <i class="fa fa-chevron-down" style="font-size:10px; margin-left:4px;"></i></button>
+                        <div class="dropdown-menu settings-width">
+                            <a href="#"><i class="fa fa-user"></i> Account</a>
+                            <a href="#"><i class="fa fa-list"></i> Wishlist</a>      
+                            <a href="#"><i class="fa fa-sort"></i> Orders</a>
+                            <!-- Fixed Logout Icon -->
+                            <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                        </div>
+                    </div>
+
+                    <!-- Fixed Login Icon -->
+                    <div class="login-btn-container">
+                        <a href="login.html"><i class="fas fa-sign-in-alt" aria-hidden="true"></i><span>Login</span></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Core Layout Frame Splitter -->
+    <div class="studio-layout">
+        
+        <!-- Sidebar Navigation Dashboard Controls -->
+        <aside class="studio-sidebar">
+            <h3 class="sidebar-brand-title">BaBeee<br>Care Products</h3>
+            <div class="concept-selector-stack">
+                <button class="concept-row-btn active-row" id="row-skincare" onclick="filterConcept('skincare', this)">
+                    <div class="btn-left">
+                        <i class="fas fa-pump-soap main-ico"></i>
+                        <span>Baby Skin Care</span>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-ico"></i>
+                </button>
+                <!-- Fixed Baby Hair Care Button Icon -->
+                <button class="concept-row-btn" id="row-haircare" onclick="filterConcept('haircare', this)">
+                    <div class="btn-left">
+                        <i class="fas fa-magic main-ico"></i>
+                        <span>Baby Hair Care</span>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-ico"></i>
+                </button>
+                <button class="concept-row-btn" id="row-medicine" onclick="filterConcept('medicine', this)">
+                    <div class="btn-left">
+                        <i class="fas fa-first-aid main-ico"></i>
+                        <span>Medicine Kit</span>
+                    </div>
+                    <i class="fas fa-chevron-right arrow-ico"></i>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Dynamic Product Content Display Stream -->
+        <main class="studio-showcase-stream">
+            
+            <div class="stream-action-header">
+                <div class="stream-title" id="streamTitleDisplay">Skin Care</div>
+                <div class="search-glass-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="studioSearchInput" onkeyup="executeStudioSearch()" placeholder="Search product items...">
+                </div>
+            </div>
+
+            <div class="studio-products-grid" id="studioGrid">
+                
+                <!-- SKIN CARE NODES -->
+                <div class="studio-card" data-concept="skincare">
+                    <div class="card-photo-panel">
+                        <img src="images/s1.jpg" onerror="this.src='https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&q=80&w=400'" alt="Skin Care Product">
+                        <div class="card-action-drawer"><button class="drawer-btn">Quick View</button></div>
+                    </div>
+                    <div class="card-meta-data">
+                        <span class="studio-tag">Skin Moisturizer</span>
+                        <h4 class="studio-item-name">Himalaya Lotion</h4>
+                        <p class="studio-item-desc">Premium gentle hydration layer keeping baby skin deeply nourished all day.</p>
+                        <div class="studio-card-footer">
+                            <span class="studio-price">$20</span>
+                            <button class="studio-buy-now">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="studio-card" data-concept="skincare">
+                    <div class="card-photo-panel">
+                        <img src="images/s2.jpg" onerror="this.src='https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=400'" alt="Skin Care Product">
+                        <div class="card-action-drawer"><button class="drawer-btn">Quick View</button></div>
+                    </div>
+                    <div class="card-meta-data">
+                        <span class="studio-tag">Organic Protection</span>
+                        <h4 class="studio-item-name">Mamaearth Cream</h4>
+                        <p class="studio-item-desc">Enriched with organic natural shea butter base layers to fix dry patches easily.</p>
+                        <div class="studio-card-footer">
+                            <span class="studio-price">$26</span>
+                            <button class="studio-buy-now">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HAIR CARE NODES -->
+                <div class="studio-card hidden-studio-item" data-concept="haircare">
+                    <div class="card-photo-panel">
+                        <img src="images/h1.jpg" onerror="this.src='https://images.unsplash.com/photo-1532713109643-df9b5f902c62?auto=format&fit=crop&q=80&w=400'" alt="Hair Care Product">
+                        <div class="card-action-drawer"><button class="drawer-btn">Quick View</button></div>
+                    </div>
+                    <div class="card-meta-data">
+                        <span class="studio-tag">Tear Free System</span>
+                        <h4 class="studio-item-name">Gentle Cleansing Wash</h4>
+                        <p class="studio-item-desc">Mild formula protecting tender scalp roots while washing hair flawlessly.</p>
+                        <div class="studio-card-footer">
+                            <span class="studio-price">$18</span>
+                            <button class="studio-buy-now">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="studio-card hidden-studio-item" data-concept="haircare">
+                    <div class="card-photo-panel">
+                        <img src="images/h2.jpg" onerror="this.src='https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=400'" alt="Hair Care Product">
+                        <div class="card-action-drawer"><button class="drawer-btn">Quick View</button></div>
+                    </div>
+                    <div class="card-meta-data">
+                        <span class="studio-tag">Root Nourishment</span>
+                        <h4 class="studio-item-name">Pure Almond Oil</h4>
+                        <p class="studio-item-desc">Infused with active vitamins to keep infant tresses shiny, soft, and thick.</p>
+                        <div class="studio-card-footer">
+                            <span class="studio-price">$22</span>
+                            <button class="studio-buy-now">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MEDICINE KIT NODES -->
+                <div class="studio-card hidden-studio-item" data-concept="medicine">
+                    <div class="card-photo-panel">
+                        <img src="images/m1.jpg" onerror="this.src='https://images.unsplash.com/photo-1584017911766-d451b3d0e843?auto=format&fit=crop&q=80&w=400'" alt="Medicine Kit Product">
+                        <div class="card-action-drawer"><button class="drawer-btn">Quick View</button></div>
+                    </div>
+                    <div class="card-meta-data">
+                        <span class="studio-tag">Emergency Care</span>
+                        <h4 class="studio-item-name">Wellness Health Box</h4>
+                        <p class="studio-item-desc">Full pediatric setup containing safe nasal tools and temperature tracking devices.</p>
+                        <div class="studio-card-footer">
+                            <span class="studio-price">$45</span>
+                            <button class="studio-buy-now">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="studio-card hidden-studio-item" data-concept="medicine">
+                    <div class="card-photo-panel">
+                        <img src="images/m2.jpg" onerror="this.src='https://images.unsplash.com/photo-1585435557343-3b092031a831?auto=format&fit=crop&q=80&w=400'" alt="Medicine Kit Product">
+                        <div class="card-action-drawer"><button class="drawer-btn">Quick View</button></div>
+                    </div>
+                    <div class="card-meta-data">
+                        <span class="studio-tag">Hygiene Box</span>
+                        <h4 class="studio-item-name">Sanosan Soothing Kit</h4>
+                        <p class="studio-item-desc">Specialized anti-rash zinc oxide formulas together with pure clinical wipes.</p>
+                        <div class="studio-card-footer">
+                            <span class="studio-price">$32</span>
+                            <button class="studio-buy-now">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Fixed Premium Ticker Bar -->
+    <div class="studio-ticker-belt">
+        <div class="ticker-inner-stream">
+            <div class="ticker-phrase"><i class="fas fa-shield-alt"></i> 100% Secure Shopping Guarantee</div>
+            <div class="ticker-phrase"><i class="fas fa-leaf"></i> Ultra-Mild Organic Certified Wellness Ranges</div>
+            <div class="ticker-phrase"><i class="fas fa-truck"></i> Free Shipping across your city on orders above $50</div>
+            <div class="ticker-phrase"><i class="fas fa-ribbon"></i> Dermatologically Checked and Verified Safe for Babies</div>
+        </div>
+    </div>
+
+    <!-- Filtering Scripts -->
+    <script>
+        function filterConcept(concept, element) {
+            document.querySelectorAll('.concept-row-btn').forEach(btn => btn.classList.remove('active-row'));
+            element.classList.add('active-row');
+            
+            const titleDisplay = document.getElementById('streamTitleDisplay');
+            titleDisplay.textContent = element.querySelector('span').textContent + " Studio";
+
+            document.querySelectorAll('.studio-card').forEach(card => {
+                if(card.getAttribute('data-concept') === concept) {
+                    card.classList.remove('hidden-studio-item');
+                } else {
+                    card.classList.add('hidden-studio-item');
+                }
+            });
+        }
+
+        function executeStudioSearch() {
+            const query = document.getElementById('studioSearchInput').value.toLowerCase();
+            const activeConcept = document.querySelector('.concept-row-btn.active-row').id.replace('row-', '');
+            
+            document.querySelectorAll('.studio-card').forEach(card => {
+                const name = card.querySelector('.studio-item-name').textContent.toLowerCase();
+                const desc = card.querySelector('.studio-item-desc').textContent.toLowerCase();
+                const matchesSearch = name.includes(query) || desc.includes(query);
+                const matchesConcept = card.getAttribute('data-concept') === activeConcept;
+
+                if(matchesSearch && matchesConcept) {
+                    card.classList.remove('hidden-studio-item');
+                } else {
+                    card.classList.add('hidden-studio-item');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

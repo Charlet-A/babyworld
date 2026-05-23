@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaBee</title>
+    
+    <!-- Font Awesome v4.7.0 CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #fff;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)), url("images/b1.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+
+        header {
+            width: 100%;
+            padding: 25px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar-outer {
+            background: linear-gradient(90deg, #f33795, #4a148c);
+            padding: 6px;
+            border-radius: 100px;
+            max-width: 1300px;
+            margin: 0 auto;
+            box-shadow: 0 12px 35px rgba(233, 30, 99, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .navbar {
+            background: #ffffff;
+            padding: 0 30px;
+            height: 58px;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Brush Script Mt', cursive;
+            font-style: italic;
+            font-size: 28px;
+            font-weight: 800;
+            color: #e91e63;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-links a, .dropbtn {
+            color: #4a148c;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 0 16px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .nav-links a i, .dropbtn i.fa-home, .dropbtn i.fa-shopping-bag, .dropbtn i.fa-newspaper-o, .dropbtn i.fa-info-circle, .dropbtn i.fa-envelope, .dropbtn i.fa-cog {
+            display: none;
+        }
+
+        .nav-links .dropbtn i.fa-chevron-down {
+            display: inline-block !important;
+        }
+
+        .login-btn-container {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-left: 10px;
+        }
+
+        .login-btn-container a {
+            background-color: #2e7d32;
+            color: white;
+            height: 38px;
+            border-radius: 50px;
+            padding: 0 22px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .login-btn-container a i {
+            display: inline-block !important;
+            margin-left: 5px;
+        }
+
+        .nav-links a:hover, .dropdown:hover .dropbtn {
+            color: #e91e63;
+            background-color: #fff0f5;
+        }
+
+        .dropdown {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-radius: 14px;
+            padding: 8px 0;
+            border: 2px solid #4a148c;
+            z-index: 1100;
+            margin-top: 0px; 
+            transform: translateY(0);
+        }
+
+        .dropdown-menu::before {
+            content: '';
+            position: absolute;
+            top: -15px; 
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: transparent;
+        }
+
+        .settings-width {
+            min-width: 145px;
+        }
+
+        .dropdown-menu a, .dropdown-item {
+            color: #4a148c;
+            width: 100%;
+            padding: 11px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-menu a i, .dropdown-item i {
+            display: inline-block !important;
+        }
+
+        .dropdown-menu a:hover, .dropdown-item:hover {
+            background-color: #fff0f5;
+            color: #e91e63;
+        }
+
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+
+        .nested-dropdown {
+            position: relative;
+        }
+
+        .nested-menu {
+            display: none;
+            position: absolute;
+            top: -10px;
+            right: 100%;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-radius: 14px;
+            padding: 8px 0;
+            border: 2px solid #4a148c;
+            z-index: 1200;
+        }
+
+        .nested-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -15px; 
+            width: 15px;
+            height: 100%;
+            background: transparent;
+        }
+
+        .nested-dropdown:hover > .nested-menu {
+            display: block;
+        }
+
+        /* Layout Structure */
+        .main-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 120px 8% 40px 12%;
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            max-width: 700px;
+            text-align: left;
+        }
+
+        .animate-wrapper {
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .animate-character {
+            font-family: 'Brush Script Mt', cursive;
+            font-size: 5.5rem;
+            font-weight: bold;
+            font-style: italic;
+            line-height: 1;
+            color: #4a148c;
+            position: relative;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100%);
+            animation: elegantReveal 1.4s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        .animate-character::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+            animation: premiumShine 4s ease-in-out infinite 1.5s;
+        }
+
+        h2 {
+            font-family: 'Brush Script Mt', cursive;
+            color: #e91e63;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            opacity: 0;
+            transform: translateY(25px);
+            animation: premiumFadeUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.4s forwards;
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 500;
+            line-height: 1.7;
+            color: #4a148c;
+            margin-bottom: 38px;
+            letter-spacing: 0.3px;
+            opacity: 0;
+            transform: translateY(25px);
+            animation: premiumFadeUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.6s forwards;
+        }
+
+        .btn-wrapper {
+            opacity: 0;
+            transform: translateY(25px);
+            animation: premiumFadeUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.8s forwards;
+        }
+
+        .shop-now-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 42px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #ff8da1, #aa00ff);
+            border-radius: 50px;
+            box-shadow: 0 10px 28px rgba(170, 0, 255, 0.25);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            letter-spacing: 0.5px;
+        }
+
+        .shop-now-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(74, 20, 140, 0.35);
+            background: linear-gradient(45deg, #4a148c, #ff4081);
+        }
+
+        @keyframes elegantReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes premiumShine {
+            0% { transform: translateX(-100%); }
+            20%, 100% { transform: translateX(100%); }
+        }
+
+        @keyframes premiumFadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 992px) {
+            .main-container { padding: 120px 5% 40px 6%; }
+            .animate-character { font-size: 4.2rem; }
+            .responsive-title { font-size: 2.2rem; }
+        }
+
+        /* MOBILE VIEW FIXED & OPTIMIZED CSS */
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 10px;
+            }
+
+            .navbar-outer {
+                background: #ffffff;
+                padding: 0;
+                border-radius: 40px;
+                box-shadow: 0 8px 25px rgba(233, 30, 99, 0.15);
+                width: 100%;
+            }
+
+            .navbar {
+                height: 52px;
+                padding: 0 8px;
+                border-radius: 40px;
+                justify-content: center;
+            }
+
+            .logo {
+                display: none;
+            }
+
+            .nav-links {
+                height: 100%;
+                width: 100%;
+                justify-content: space-between;
+                position: relative; /* Fixed reference anchor context for absolute blocks */
+            }
+
+            .nav-links a, .dropbtn {
+                padding: 0 8px;
+                font-size: 0;
+                height: 52px;
+                width: auto;
+            }
+
+            .nav-links a i, .dropbtn i {
+                display: inline-block !important;
+                font-size: 18px;
+                margin: 0;
+                padding: 0;
+            }
+
+            .dropbtn i.fa-chevron-down {
+                display: none !important;
+            }
+
+            .login-btn-container {
+                padding-left: 0;
+            }
+
+            .login-btn-container a {
+                width: 36px;
+                height: 36px;
+                padding: 0;
+                border-radius: 50%;
+                justify-content: center;
+                background-color: #2e7d32;
+            }
+
+            .login-btn-container a span {
+                display: none;
+            }
+
+            .login-btn-container a i {
+                margin: 0 !important;
+                font-size: 14px;
+            }
+
+            /* FIXED: Dropdown menu standard sizes bounded inside viewports */
+            .dropdown-menu {
+                top: 100%;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%); /* Centered layout block prevent right edge leaks */
+                min-width: 145px; /* Compacted width constraints */
+                max-width: 160px;
+                border-radius: 12px;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+                padding: 4px 0;
+            }
+
+            /* FIXED: Settings element micro-adjustment standard alignments */
+            .settings-width {
+                min-width: 130px;
+                left: auto;
+                right: 0;
+                transform: none;
+            }
+
+            /* FIXED: Setup touch trigger dynamic gaps natively override pseudo positions */
+            .dropdown-menu::before {
+                top: -12px;
+                height: 12px;
+                left: 0;
+                width: 100%;
+            }
+
+            .dropdown-menu a, .dropdown-item {
+                font-size: 13px !important; 
+                padding: 9px 12px;
+                gap: 6px;
+            }
+
+            /* FIXED: Subdropdown panels stack alignment changes prevents horizontal viewport clipping */
+            .nested-menu {
+                left: 0;
+                right: auto;
+                top: 100%; /* Flip downwards inside mobile views instead of hiding offscreen */
+                position: relative;
+                box-shadow: none;
+                border: none;
+                border-left: 2px dashed #fd9ebf;
+                border-radius: 0;
+                padding: 4px 0 4px 12px;
+                margin-top: 2px;
+                min-width: 100%;
+                background: #fffafc;
+            }
+
+            /* Disable desktop helper overlays inside vertical stacks */
+            .nested-menu::before {
+                display: none;
+            }
+
+            /* Change indicator icons downwards during dynamic vertical cascade toggles */
+            .dropdown-item i.fa-chevron-left {
+                transform: rotate(-90deg); 
+                font-size: 9px !important;
+            }
+
+            .main-container {
+                justify-content: center;
+                padding: 130px 24px 40px 24px;
+            }
+
+            .main-content {
+                text-align: center;
+                max-width: 100%;
+            }
+
+            .animate-character { font-size: 3rem; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 0.95rem; margin-bottom: 25px; }
+            .shop-now-btn { padding: 14px 36px; font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar-outer">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fa fa-gg" aria-hidden="true"></i> BaBeee
+                </a>
+                
+                <div class="nav-links">
+                    <a href="home.html"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+                    
+                    <div class="dropdown">
+                        <button class="dropbtn"><i class="fa fa-shopping-bag" aria-hidden="true"></i>Shop <i class="fa fa-chevron-down" style="font-size:10px; margin-left:4px;"></i></button>
+                        <div class="dropdown-menu">
+                            <div class="nested-dropdown">
+                                <div class="dropdown-item">Nursery <i class="fa fa-chevron-left" style="font-size:10px;"></i></div>
+                                <div class="nested-menu">
+                                    <a href="Nursery.html">Toys</a>
+                                    <a href="Nursery.html">Cribs</a>
+                                    <a href="Nursery.html">Accessories</a>
+                                </div>
+                            </div>
+                            <div class="nested-dropdown">
+                                <div class="dropdown-item">Fashion <i class="fa fa-chevron-left" style="font-size:10px;"></i></div>
+                                <div class="nested-menu">
+                                    <a href="Fashion.html">Sleep Wear</a>
+                                    <a href="Fashion.html">Outer Wear</a>
+                                    <a href="Fashion.html">Dresses</a>
+                                </div>
+                            </div>
+                            <div class="nested-dropdown">
+                                <div class="dropdown-item">Products <i class="fa fa-chevron-left" style="font-size:10px;"></i></div>
+                                <div class="nested-menu">
+                                    <a href="Product.html">Skin Care</a>
+                                    <a href="Product.html">Hair Care</a>
+                                    <a href="Product.html">Medicine Kit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#"><i class="fa fa-newspaper-o" aria-hidden="true"></i>Blogs</a>
+                    <a href="about.html"><i class="fa fa-info-circle" aria-hidden="true"></i>About</a>   
+                    <a href="contact.html"><i class="fa fa-envelope" aria-hidden="true"></i>Contact Us</a>
+
+                    <div class="dropdown">
+                        <button class="dropbtn"><i class="fa fa-cog" aria-hidden="true"></i>Settings <i class="fa fa-chevron-down" style="font-size:10px; margin-left:4px;"></i></button>
+                        <div class="dropdown-menu settings-width">
+                            <a href="#"><i class="fa fa-user"></i> Account</a>
+                            <a href="#"><i class="fa fa-list"></i> Wishlist</a>      
+                            <a href="#"><i class="fa fa-sort"></i> Orders</a>
+                            <a href="logout.php"><i class="fa fa-sign-out"></i> Log Out</a>
+                        </div>
+                    </div>
+
+                    <div class="login-btn-container">
+                        <a href="login.html"><i class="fa fa-sign-in" aria-hidden="true"></i><span>Login</span></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <main class="main-content">
+            <div class="animate-wrapper">
+                <h1 class="animate-character">BaBee Collections</h1>
+            </div>
+            <h2>For Your Babies</h2>
+            <h3>Good Quality and Materials For <br>Baby's Comfort and Cuteness.</h3>
+            <div class="btn-wrapper">
+                <a href="shop.html" class="shop-now-btn">Shop Now</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
