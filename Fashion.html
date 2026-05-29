@@ -628,50 +628,198 @@
         }
 
         @media (max-width: 768px) {
-            header { padding: 12px 10px; background: transparent; }
-            .navbar-outer { background: #ffffff; border-radius: 40px; box-shadow: 0 8px 25px rgba(243, 55, 149, 0.15); width: 100%; padding: 0; }
-            .navbar { height: 52px; padding: 0 8px; justify-content: center; }
-            .logo { display: none; }
-            
-            .nav-links { width: 100%; justify-content: space-between; }
-            .nav-links a, .dropbtn { padding: 0 8px; font-size: 0; height: 52px; }
-            .nav-links a i, .dropbtn i { display: inline-block !important; font-size: 18px; margin: 0; color: #4a148c; }
-            .dropbtn i.fa-chevron-down { display: none !important; }
-            
-            .login-btn-container { padding-left: 0; }
-            .login-btn-container a { width: 36px; height: 36px; padding: 0; border-radius: 50%; justify-content: center; background-color: #2e7d32; }
-            .login-btn-container a span { display: none; }
-            .dropdown-menu { left: 50%; right: auto; transform: translateX(-50%); }
+    header {
+        padding: 12px 10px;
+    }
 
-            .workspace-grid-container { margin-top: 95px; padding: 0 20px; }
-            .brand-editorial-panel h2 { font-size: 2.3rem; }
-            .brand-editorial-panel p.studio-description { font-size: 0.9rem; }
-            
-            .advanced-sub-nav-wrapper {
-                width: 100%;
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                border-radius: 20px;
-                padding: 4px;
-            }
-            .sub-nav-glow-pill {
-                display: none; /* Fluid glow tracking pill disabled for structural grid cell conversion context */
-            }
-            .sub-nav-item-btn {
-                padding: 10px 0;
-                font-size: 0.8rem;
-                justify-content: center;
-                border-radius: 14px;
-            }
-            .sub-nav-item-btn.active-sub-item {
-                background: linear-gradient(135deg, #f33795 0%, #7b1fa2 100%);
-            }
+    .navbar-outer {
+        background: #ffffff;
+        padding: 0;
+        border-radius: 40px;
+        box-shadow: 0 8px 25px rgba(233, 30, 99, 0.15);
+        width: 100%;
+    }
 
-            .stack-spatial-viewport { max-width: 300px; height: 445px; margin-bottom: 60px; }
-            .premium-visual-canvas { height: 235px; border-radius: 24px; }
-            .luxury-studio-card { border-radius: 34px; padding: 14px; }
-            .card-heading-title { font-size: 1.25rem; margin-bottom: 8px; }
-        }
+    .navbar {
+        height: 52px;
+        padding: 0 8px;
+        border-radius: 40px;
+        justify-content: center;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .nav-links {
+        height: 100%;
+        width: 100%;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .nav-links a,
+    .dropbtn {
+        padding: 0 8px;
+        font-size: 0;
+        height: 52px;
+        width: auto;
+    }
+
+    .nav-links a i,
+    .dropbtn i {
+        display: inline-block !important;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+        color: #4a148c;
+    }
+
+    .dropbtn i.fa-chevron-down,
+    .dropbtn i.fas.fa-chevron-down {
+        display: none !important;
+    }
+
+    .login-btn-container {
+        padding-left: 0;
+    }
+
+    .login-btn-container a {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+        background-color: #2e7d32;
+    }
+
+    .login-btn-container a span {
+        display: none;
+    }
+
+    .login-btn-container a i {
+        margin: 0 !important;
+        font-size: 14px;
+    }
+
+    /* MAIN DROPDOWN */
+    .dropdown-menu {
+        top: 100%;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        min-width: 145px;
+        max-width: 160px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        padding: 4px 0;
+    }
+
+    .settings-width {
+        min-width: 130px;
+        left: auto;
+        right: 0;
+        transform: none;
+    }
+
+    .dropdown-menu::before {
+        top: -12px;
+        height: 12px;
+        left: 0;
+        width: 100%;
+    }
+
+    .dropdown-menu a,
+    .dropdown-item {
+        font-size: 13px !important;
+        padding: 9px 12px;
+        gap: 6px;
+    }
+
+    /* NESTED DROPDOWN MOBILE STYLE */
+    .nested-menu {
+        left: 0;
+        right: auto;
+        top: 100%;
+        position: relative;
+        box-shadow: none;
+        border: none;
+        border-left: 2px dashed #fd9ebf;
+        border-radius: 0;
+        padding: 4px 0 4px 12px;
+        margin-top: 2px;
+        min-width: 100%;
+        background: #fffafc;
+    }
+
+    .nested-menu::before {
+        display: none;
+    }
+
+    .dropdown-item i.fa-chevron-left,
+    .dropdown-item i.fas.fa-chevron-left {
+        transform: rotate(-90deg);
+        font-size: 9px !important;
+    }
+
+    /* YOUR EXISTING CONTENT MOBILE */
+    .workspace-grid-container {
+        margin-top: 95px;
+        padding: 0 20px;
+    }
+
+    .brand-editorial-panel h2 {
+        font-size: 2.3rem;
+    }
+
+    .brand-editorial-panel p.studio-description {
+        font-size: 0.9rem;
+    }
+
+    .advanced-sub-nav-wrapper {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-radius: 20px;
+        padding: 4px;
+    }
+
+    .sub-nav-glow-pill {
+        display: none;
+    }
+
+    .sub-nav-item-btn {
+        padding: 10px 0;
+        font-size: 0.8rem;
+        justify-content: center;
+        border-radius: 14px;
+    }
+
+    .sub-nav-item-btn.active-sub-item {
+        background: linear-gradient(135deg, #f33795 0%, #7b1fa2 100%);
+    }
+
+    .stack-spatial-viewport {
+        max-width: 300px;
+        height: 445px;
+        margin-bottom: 60px;
+    }
+
+    .premium-visual-canvas {
+        height: 235px;
+        border-radius: 24px;
+    }
+
+    .luxury-studio-card {
+        border-radius: 34px;
+        padding: 14px;
+    }
+
+    .card-heading-title {
+        font-size: 1.25rem;
+        margin-bottom: 8px;
+    }
+}
     </style>
 </head>
 <body>
